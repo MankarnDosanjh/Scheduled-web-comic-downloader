@@ -1,0 +1,57 @@
+'http://www.lefthandedtoons.com/'
+path = './{INDEX}'
+INDEX = 0 - 2000
+css = '.comicimage'
+standalone = True
+single_comic = True
+
+'http://www.exocomics.com/'
+path = './{INDEX}'
+range = 0 - 800
+css = '.image-style-main-comic'
+standalone = False, 'Source relative to host site'
+single_comic = True
+
+'http://buttersafe.com/'
+path = './YYYY/MM/DD/{DATE}'
+DATE = '2007/04/03' - '2025/02/06'
+css = '#comic > img'
+standalone = True
+single_comic = True
+
+'http://www.savagechickens.com/'
+path = './category/cartoons/page/{INDEX}'
+INDEX = 0 - 1300
+css = 'div:nth-child(2) > div:nth-child(1) > p:nth-child(1) > img'
+standalone = True
+single_comic = False
+
+'http://www.lunarbaboon.com/'
+path = './comics/?currentPage={INDEX}'
+INDEX = 0 - 200
+css = 'div:nth-child(3) > div:nth-child(3) > p:nth-child(1) > span:nth-child(1) > img'
+standalone = False, 'Source relative to host site'
+single_comic = False
+
+'http://nonadventures.com/'
+path =  './YYYY/MM/DD/{DATE}'
+DATE = '2006/09/09' - '2025/02/02'
+css = '#comic > img'
+standalone = True
+single_comic = True
+
+'https://squires.nz/'
+title_crawl_path = '?comics_paged={INDEX}&blog_paged=1#comics-section'
+title_css = 'a:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > p'
+comic_path = './comic/{TITLE}'
+INDEX = 1 - 49
+TITLE = 'STRING', 'Spaces represented as "-"'
+standalone = True
+single_comic = 'Complicated'
+
+'https://www.sociallyawkwardmisfit.com/'
+path = './category/{YEAR}'
+YEAR = 2014 - 2024
+css = 'div:nth-child(2) > p:nth-child(1) > a'
+standalone = True
+single_comic = 'Complicated'
