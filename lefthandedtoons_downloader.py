@@ -65,7 +65,7 @@ def lefthandedtoons(start_comic, end_comic):
             
             except:
                 # Writes image download errors to file.
-                with open('lefthandedtoons_errors.txt', 'a') as fhandle:
+                with open('./lefthandedtoons_errors.txt', 'a') as fhandle:
                     fhandle.write(f'ERROR - {comic_url} DOWNLOAD FAILED\n\n')
 
 # Runs lefthandedtoons function with multithreading.
