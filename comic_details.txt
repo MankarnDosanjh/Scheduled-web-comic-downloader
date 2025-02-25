@@ -14,9 +14,6 @@ css = '.image-style-main-comic'
 standalone = False, 'Source relative to host site'
 single_comic = True
 
-
-INCOMPLETE:
----------------------------------------------------------------------------------------------
 'http://www.savagechickens.com/'
 path = './category/cartoons/page/{INDEX}'
 INDEX = 0 - 1300
@@ -24,6 +21,8 @@ css = 'div:nth-child(2) > div:nth-child(1) > p:nth-child(1) > img'
 standalone = True
 single_comic = False
 
+INCOMPLETE:
+---------------------------------------------------------------------------------------------
 'http://www.lunarbaboon.com/'
 path = './comics/?currentPage={INDEX}'
 INDEX = 0 - 200
