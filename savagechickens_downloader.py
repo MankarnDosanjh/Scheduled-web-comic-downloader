@@ -16,11 +16,12 @@ FINAL_PAGE = 1300
 THREADS = (-(-FINAL_PAGE // 16))
 
 # Downloads comics from https://www.savagechickens.com.
-import requests, bs4
+import requests, bs4, pprint
 def savagechickens(start_page, end_page):
 
     HOST = 'https://www.savagechickens.com/category/cartoons/page'
-    CSS = 'div:nth-child(2) > div:nth-child(1) > p:nth-child(1) > img'
+    CSS = ['div:nth-child(2) > div:nth-child(1) > p:nth-child(1) > img',
+           'div:nth-child(2) > div:nth-child(1) > p:nth-child(1) > a:nth-child(1) > img']
 
     # Creates directory to store comics.
     os.makedirs('./savagechickens', exist_ok=True)
@@ -39,37 +40,42 @@ def savagechickens(start_page, end_page):
             with open('./savagechickens_errors.txt', 'a') as fhandle:
                 fhandle.write(f'ERROR - {page} DOWNLOAD FAILED\n\n')
             continue
+        
+        # Searches for image source using CSS selectors.
+        css_flag = False
+        for selector in CSS:
+            comic_elems = soup.select(selector)
+            if comic_elems == []: 
+                continue
 
-        # Searches for image source using CSS selector.
-        comic_elems = soup.select(CSS)
+            else:
+                css_flag = True
+                for elem in comic_elems:
+                    # Extracts image source link from CSS selection.
+                    comic_url = elem.get('src')
 
-        if comic_elems == []:
-            # Writes CSS selection errors to file.
+                    # Downloads the image.
+                    print(f'Downloading image {comic_url}...')
+
+                    try:
+                        # Save image to folder.
+                        res = requests.get(comic_url)
+                        res.raise_for_status()
+                        with open(f'./savagechickens/{os.path.basename(comic_url)}', 'wb') as fhandle:
+                            for chunk in res.iter_content(100000):
+                                fhandle.write(chunk)
+                    
+                    except:
+                        # Writes image download errors to file.
+                        with open('./savagechickens_errors.txt', 'a') as fhandle:
+                            fhandle.write(f'ERROR - {comic_url} DOWNLOAD FAILED\n\n')
+
+        # Writes to file when all CSS selectors fail.    
+        if not css_flag:
             with open('./savagechickens_errors.txt', 'a') as fhandle:
-                fhandle.write(f'ERROR - CSS SELECTOR {CSS} RETURNED NOTHING ON {page}\n\n')
-            
-        else:
-            for elem in comic_elems:
-                # Extracts image source link from CSS selection.
-                comic_url = elem.get('src')
+                fhandle.write(f'ERROR - {CSS} RETURNED NOTHING ON {page}')
 
-                # Downloads the image.
-                print(f'Downloading image {comic_url}...')
-
-                try:
-                    # Save image to folder.
-                    res = requests.get(comic_url)
-                    res.raise_for_status()
-                    with open(f'./savagechickens/{os.path.basename(comic_url)}', 'wb') as fhandle:
-                        for chunk in res.iter_content(100000):
-                            fhandle.write(chunk)
-                
-                except:
-                    # Writes image download errors to file.
-                    with open('./savagechickens_errors.txt', 'a') as fhandle:
-                        fhandle.write(f'ERROR - {comic_url} DOWNLOAD FAILED\n\n')
-
-# Runs lefthandedtoons function with multithreading.
+# Runs savagechickens function with multithreading.
 import time, threading
 def threaded_execution(start, stop, step, function):
     
@@ -97,12 +103,3 @@ def threaded_execution(start, stop, step, function):
     print(f'\n{function.__name__} comic download finished. Took {time.time() - start_time: .2f} seconds')
 
 threaded_execution(FIRST_PAGE, FINAL_PAGE, THREADS, savagechickens)
-
-'''
-http://www.savagechickens.com/'
-path = './category/cartoons/page/{INDEX}'
-INDEX = 0 - 1300
-css = 'div:nth-child(2) > div:nth-child(1) > p:nth-child(1) > img'
-standalone = True
-single_comic = False
-'''
