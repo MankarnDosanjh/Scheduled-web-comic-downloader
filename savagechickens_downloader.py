@@ -16,7 +16,7 @@ FINAL_PAGE = 1300
 THREADS = (-(-FINAL_PAGE // 16))
 
 # Downloads comics from https://www.savagechickens.com.
-import requests, bs4, pprint
+import requests, bs4
 def savagechickens(start_page, end_page):
 
     HOST = 'https://www.savagechickens.com/category/cartoons/page'
