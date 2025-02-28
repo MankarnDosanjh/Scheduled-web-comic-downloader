@@ -1,0 +1,25 @@
+HOST = Host website
+
+CSS = CSS selector used to locate image urls
+
+page = Host website with path and index for scraping comics.
+
+The main function will need to take a range for multithreading.
+
+Main function could take:
+- site str : CSS selectors str dict
+- Iteration range list e.g. [0, 2] or [2014, 2015]
+    NOTE: Dates could work, I just need to find out how to work with datetimes like normal ranges.
+
+Iterate through the data structure as single item, pass item to threading function,
+break item into parts and pass to downloader function.
+
+{
+    'http://www.exocomics.com/:
+    [
+    ['.image-style-main-comic'], 
+    [1, 764]
+    ],
+
+
+}
