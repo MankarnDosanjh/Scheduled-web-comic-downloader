@@ -14,6 +14,8 @@ Main function could take:
 Iterate through the data structure as single item, pass item to threading function,
 break item into parts and pass to downloader function.
 
+Pass the item to the threading program, and have it calculate the step from the end range.
+
 {
     'http://www.exocomics.com/:
     [
